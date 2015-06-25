@@ -1,1 +1,3 @@
 workshop
+*.pyc
+deps-scripts/log.txt
