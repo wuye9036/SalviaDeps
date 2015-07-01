@@ -11,7 +11,6 @@ ZIP_LIST = [
     'resources/cup',
     'resources/font',
     'resources/morph',
-    'resources/sponza_hq',
     'resources/sponza_lq',
     'resources/ssm',
     'resources/texture_and_blending',
@@ -71,6 +70,10 @@ if __name__ == "__main__":
             
     print('Writing file hash code')
     with open(sigFileFullPath, "w") as sigFile:
+        sigFile.write('RAW_FILE          = "RAW_FILE"\n')
+        sigFile.write('COMPRESSED_FILE   = "CMP_FILE"\n')
+        sigFile.write('COMPRESSED_FOLDER = "CMP_FLDR"\n')
+        
         sigFile.write("DOWNLOAD_LIST = [\n")
         for fHashInfo in fileHash:
             sigFile.write('    ("%s", %s, "%s"),\n' % fHashInfo)
