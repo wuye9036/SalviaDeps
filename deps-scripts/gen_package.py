@@ -21,7 +21,8 @@ RAW_LIST = [
     "basic_tools/linux/7z.so"    ,
     "basic_tools/win32/7z.dll"    ,
     "basic_tools/win32/7z.exe"    ,
-    "__patches__/resources/sponza_lq/part_of_sponza.mtl"
+    "__patches__/resources/sponza_lq/part_of_sponza.mtl",
+    "__patches__/3rd_party/FreeImage/CMakeLists.txt"
 ]
 
 def ToPath(posixpath):
