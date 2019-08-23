@@ -3,7 +3,7 @@ COMPRESSED_FILE   = "CMP_FILE"
 COMPRESSED_FOLDER = "CMP_FLDR"
 DOWNLOAD_LIST = [
     ("3rd_party/boost", COMPRESSED_FOLDER, "4a8a1a7c77fb6029ac30865ad7339e52"),
-    ("3rd_party/FreeImage", COMPRESSED_FOLDER, "03ace1aaab81aec3fa2849c0e9da88d1"),
+    ("3rd_party/FreeImage", COMPRESSED_FOLDER, "260599ca08ae81f68d42b64104e7458f"),
     ("3rd_party/freetype2", COMPRESSED_FOLDER, "88c7fa3bdc6a180592359aee994be199"),
     ("3rd_party/llvm", COMPRESSED_FOLDER, "e3a2d6d9ccd132dba317e68f1cdf2cc1"),
     ("3rd_party/threadpool", COMPRESSED_FOLDER, "0ccb614305e10bb0e6bb12af46c35997"),
