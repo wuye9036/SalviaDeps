@@ -21,7 +21,8 @@ RAW_LIST = [
     "basic_tools/linux/7z.so"    ,
     "basic_tools/win32/7z.dll"    ,
     "basic_tools/win32/7z.exe"    ,
-    "__patches__/resources/sponza_lq/part_of_sponza.mtl"
+    "__patches__/resources/sponza_lq/part_of_sponza.mtl",
+    "__patches__/3rd_party/FreeImage/CMakeLists.txt"
 ]
 
 def ToPath(posixpath):
@@ -43,31 +44,39 @@ if __name__ == "__main__":
         for zipSource in ZIP_LIST:
             zipSrcFullPath = os.path.join( srcPath, ToPath(zipSource) )
             zipDstFullPath = os.path.join( dstPath, ToPath(zipSource + ".7z") )
-            print("Compressing <%s>" % zipSource)
-            o = subprocess.check_output([zipBinFullPath, "a", zipDstFullPath, zipSrcFullPath])
-            f.writelines(o)
-            if o.split('\n')[-2].strip() != "Everything is Ok":
-                print "Error occured. details are in log.txt"
-                sys.exit(1)
+            
+            if not os.path.isfile(zipDstFullPath):
+                print("Compressing <%s>." % zipSource)
+                o = subprocess.check_output([zipBinFullPath, "a", zipDstFullPath, zipSrcFullPath])
+                f.writelines(o)
+                if o.split('\n')[-2].strip() != "Everything is Ok":
+                    print("Error occured. details are in log.txt")
+                    sys.exit(1)
+            else:
+                print("File <%s> existed." % zipSource)
+                f.writelines(f"File {zipSource} existed.")
+                
             print("Hashing <%s>" % zipSource)
             hashCode = fhash.hash_file(zipDstFullPath)
-            res_type = "COMPRESSED_FOLDER" if os.path.isdir(zipSrcFullPath) else "COMPRESSED_FILE"
+            res_type = "COMPRESSED_FOLDER" # if os.path.isdir(zipSrcFullPath) else "COMPRESSED_FILE"
             fileHash.append( (zipSource, res_type, hashCode) )
             
     for rawSource in RAW_LIST:
         rawSrcFullPath = os.path.join( srcPath, ToPath(rawSource) )
         rawDstFullPath = os.path.join( dstPath, ToPath(rawSource) )
         print("Copying <%s>" % rawSource)
-        if os.path.isfile(rawSrcFullPath):
+        if os.path.isfile(rawDstFullPath):
+            print("File <%s> has been existed." % rawDstFullPath)
+        elif os.path.isfile(rawSrcFullPath):
             dirName = os.path.dirname(rawDstFullPath)
             if not os.path.isdir(dirName):
                 os.makedirs(dirName)
             shutil.copyfile(rawSrcFullPath, rawDstFullPath)
-            print("Hashing <%s>" % rawSource)
-            hashCode = fhash.hash_file(rawDstFullPath)
-            fileHash.append( (rawSource, "RAW_FILE", hashCode) )
         else:
-            print("File is not existed.")
+            print("File is not existed.")           
+        print("Hashing <%s>" % rawSource)
+        hashCode = fhash.hash_file(rawDstFullPath)
+        fileHash.append( (rawSource, "RAW_FILE", hashCode) )
             
     print('Writing file hash code')
     with open(sigFileFullPath, "w") as sigFile:

@@ -1,2 +1,2 @@
-mkdir boost-subset
-bcp --boost=.\boost_1_58_0 build test wave program_options property_tree signals2 locale inspect config circular_buffer spirit algorithm assign smart_ptr bimap logic phoenix uuid range utility icl chrono .\boost-subset
+bcp --boost=.\boost_1_70_0 build boost_install test wave program_options property_tree signals2 locale inspect config circular_buffer spirit algorithm bimap phoenix uuid range utility icl predef log headers .\boost-subset
+bjam --toolset=msvc-14.2 --with-test --with-wave --with-program_options address-model=64 link=shared runtime-link=shared threading=multi --hash
